@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Slackware build script for pinpoint
+# Slackware build script for clutter
 
 # Copyright 2006,2007,2008  Eric Hameleers, Eindhoven, NL
 # Copyright 2008, 2009  Patrick J. Volkerding, Sebeka, MN  USA
@@ -27,8 +27,8 @@
 # Modified by Passbird <museguge@gmail.com> to build ibus
 # Feedback (especially improvements) is encouraged!  :-)
 
-PRGNAM=pinpoint
-VERSION=${VERSION:-0.1.2}
+PRGNAM=clutter
+VERSION=${VERSION:-1.6.16}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_ME}
 
@@ -95,10 +95,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc \
   --localstatedir=/var \
   --build=$ARCH-slackware-linux \
-  --enable-pdf=yes \
-  --enable-cluttergst=yes \
-  --enable-rsvg=yes
-#  --enable-dax=yes
+  --enable-xinput \
+  --enable-debug=no \
+  --enable-cogl-debug=no \
+  --enable-gtk-doc-html
 
 # Compile the source, but exit if anything goes wrong
 make $NUMJOBS || make || exit 1
@@ -112,7 +112,7 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 
 # Copy documentation to the docs directory and fix permissions
 cp -ar \
-  AUTHORS COPYING ChangeLog NEWS README bg.jpg bowls.jpg introduction.pin \
+  ABOUT-NLS AUTHORS COPYING ChangeLog* NEWS README.in doc/ \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 cat $CWD/README.ME > $PKG/usr/doc/$PRGNAM-$VERSION/README.ME

@@ -97,8 +97,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --build=$ARCH-slackware-linux \
   --enable-pdf=yes \
   --enable-cluttergst=yes \
-  --enable-rsvg=yes
-#  --enable-dax=yes
+  --enable-rsvg=yes \
+  --enable-dax=yes
 
 # Compile the source, but exit if anything goes wrong
 make $NUMJOBS || make || exit 1
@@ -112,10 +112,14 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 
 # Copy documentation to the docs directory and fix permissions
 cp -ar \
-  AUTHORS COPYING ChangeLog NEWS README bg.jpg bowls.jpg introduction.pin \
+  AUTHORS COPYING ChangeLog NEWS README \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-cat $CWD/README.ME > $PKG/usr/doc/$PRGNAM-$VERSION/README.ME
+
+# Add README.ME to package (if it exists)
+if [ -e $CWD/README.ME ]; then
+  cat $CWD/README.ME > $PKG/usr/doc/$PRGNAM-$VERSION/README.ME
+fi
 
 # Create the ./install directory and copy the slack-desc into it
 mkdir -p $PKG/install
